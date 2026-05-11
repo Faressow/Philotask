@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -L -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36\" -o chrysostom.jpg \"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Saint_John_Chrysostom_at_Chora.jpg/600px-Saint_John_Chrysostom_at_Chora.jpg\")",
+      "Bash(curl -L -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36\" -o paul.jpg \"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Apostol_Pavel.jpg/600px-Apostol_Pavel.jpg\")"
+    ]
+  }
+}

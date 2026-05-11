@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg" cx="38%" cy="32%" r="70%">
+      <stop offset="0%" stop-color="#90caf9"/>
+      <stop offset="100%" stop-color="#1565c0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#bg)"/>
+  <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <!-- Cave allegory: opening + light rays -->
+  <!-- Cave arch -->
+  <path d="M68,96 Q68,52 100,52 Q132,52 132,96" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+  <!-- Light rays from inside cave -->
+  <line x1="100" y1="52" x2="100" y2="36" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="100" y1="52" x2="88" y2="38" stroke="rgba(255,255,255,0.22)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="100" y1="52" x2="112" y2="38" stroke="rgba(255,255,255,0.22)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="100" y1="52" x2="80" y2="42" stroke="rgba(255,255,255,0.14)" stroke-width="1" stroke-linecap="round"/>
+  <line x1="100" y1="52" x2="120" y2="42" stroke="rgba(255,255,255,0.14)" stroke-width="1" stroke-linecap="round"/>
+  <!-- Sun -->
+  <circle cx="100" cy="34" r="7" fill="rgba(255,255,255,0.3)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+  <!-- Initials -->
+  <text x="100" y="108" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="32" font-weight="700" fill="rgba(255,255,255,0.9)">PL</text>
+  <line x1="52" y1="132" x2="148" y2="132" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+  <text x="100" y="149" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="13" font-weight="700" fill="rgba(255,255,255,0.9)" letter-spacing="2">PLATO</text>
+  <text x="100" y="166" text-anchor="middle" font-family="Georgia, serif"
+        font-size="9.5" fill="rgba(255,255,255,0.55)" font-style="italic">Greek Philosopher · 428–348 BC</text>
+</svg>

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem \"c:\\\\Users\\\\Ibram .Apdalla\\\\OneDrive - Mälardalens Tekniska Gymnasium\\\\Skrivbordet\\\\AG\\\\images\")",
+      "Bash(Select-Object Name, Length)",
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\Ibram .Apdalla\\\\OneDrive - Mälardalens Tekniska Gymnasium\\\\Skrivbordet\\\\AG\\\\images\" | ForEach-Object { \"$\\($_.Name\\) - $\\($_.Length\\) bytes\" })",
+      "WebSearch",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "Bash(curl -L -o epictetus.png \"https://upload.wikimedia.org/wikipedia/commons/b/ba/Epictetus_portrait_from_Les_Morales_de_Plutarque%2C_S%C3%A9n%C3%A8que%2C_Socrate_et_Epict%C3%A8te%2C_1653%2C_Indian_ink.png\")"
+    ]
+  }
+}

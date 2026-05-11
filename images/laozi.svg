@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg" cx="38%" cy="32%" r="70%">
+      <stop offset="0%" stop-color="#b39ddb"/>
+      <stop offset="100%" stop-color="#4527a0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#bg)"/>
+  <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <!-- Yin-Yang symbol -->
+  <circle cx="100" cy="72" r="24" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+  <!-- Yin half (dark) -->
+  <path d="M100,48 A24,24,0,0,1,100,96 A12,12,0,0,1,100,72 A12,12,0,0,0,100,48 Z" fill="rgba(255,255,255,0.22)"/>
+  <!-- Small dots -->
+  <circle cx="100" cy="60" r="4" fill="rgba(255,255,255,0.12)"/>
+  <circle cx="100" cy="84" r="4" fill="rgba(255,255,255,0.3)"/>
+  <!-- Initials -->
+  <text x="100" y="108" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="28" font-weight="700" fill="rgba(255,255,255,0.9)">LT</text>
+  <line x1="52" y1="132" x2="148" y2="132" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+  <text x="100" y="149" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="13" font-weight="700" fill="rgba(255,255,255,0.9)" letter-spacing="2">LAO TZU</text>
+  <text x="100" y="166" text-anchor="middle" font-family="Georgia, serif"
+        font-size="9.5" fill="rgba(255,255,255,0.55)" font-style="italic">Taoist Sage · 6th c. BC</text>
+</svg>
