@@ -4,27 +4,32 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg-primary: #0a0a12;
-  --bg-secondary: #12121f;
-  --bg-card: #1a1a2e;
-  --bg-card-hover: #222240;
+  /* Backgrounds — deep purple-black, wisdom & mystery */
+  --bg-primary: #0d0a14;
+  --bg-secondary: #120f1c;
+  --bg-card: #1a1528;
+  --bg-card-hover: #221e35;
   --surface: rgba(255,255,255,0.04);
   --border: rgba(255,255,255,0.08);
-  --border-glow: rgba(240,194,127,0.3);
+  --border-glow: rgba(147,51,234,0.3);
   --text-primary: #f0ece4;
   --text-secondary: #9a95a8;
   --text-muted: #5c5873;
-  --accent-gold: #f0c27f;
-  --accent-rose: #fc5c7d;
-  --accent-purple: #a855f7;
-  --accent-cyan: #06b6d4;
-  --accent-emerald: #34d399;
-  --gradient-hero: linear-gradient(135deg, #f0c27f 0%, #fc5c7d 50%, #a855f7 100%);
-  --gradient-gold: linear-gradient(135deg, #f0c27f, #e6a756);
-  --gradient-card: linear-gradient(145deg, rgba(26,26,46,0.9), rgba(18,18,31,0.95));
+  /* Color philosophy accents */
+  --accent-gold: #d4a843;       /* Knowledge, intellect, achievement */
+  --accent-rose: #dc2626;       /* Christianity, energy, passion, courage */
+  --accent-purple: #9333ea;     /* Wisdom, creativity, royalty, magic */
+  --accent-cyan: #3b82f6;       /* Trust, reliability, tranquility */
+  --accent-emerald: #22c55e;    /* Growth, harmony, prosperity */
+  --accent-amber: #f59e0b;      /* Positivity, joy, energy, streaks */
+  /* Gradients: Red → Purple → Gold = Christianity → Wisdom → Knowledge */
+  --gradient-hero: linear-gradient(135deg, #dc2626 0%, #9333ea 60%, #d4a843 100%);
+  --gradient-gold: linear-gradient(135deg, #d4a843, #b8891e);
+  --gradient-card: linear-gradient(145deg, rgba(26,21,40,0.9), rgba(18,15,28,0.95));
   --shadow-lg: 0 20px 60px rgba(0,0,0,0.5);
-  --shadow-glow-gold: 0 0 40px rgba(240,194,127,0.25);
-  --shadow-glow-rose: 0 0 40px rgba(252,92,125,0.25);
+  --shadow-glow-gold: 0 0 40px rgba(212,168,67,0.25);
+  --shadow-glow-rose: 0 0 40px rgba(220,38,38,0.25);
+  --shadow-glow-purple: 0 0 40px rgba(147,51,234,0.25);
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
@@ -44,8 +49,8 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
   background-image:
-    radial-gradient(ellipse at 20% 0%, rgba(240,194,127,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 100%, rgba(168,85,247,0.06) 0%, transparent 60%);
+    radial-gradient(ellipse at 20% 0%, rgba(147,51,234,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(220,38,38,0.06) 0%, transparent 60%);
 }
 
 /* ── QUOTE OVERLAY ─────────────────────────────────────── */
@@ -217,7 +222,7 @@ body {
 .stat-pill__icon { font-size: 0.9rem; }
 .stat-pill__value { font-weight: 700; color: var(--accent-gold); }
 .stat-pill--done .stat-pill__value { color: var(--accent-emerald); }
-.stat-pill--streak .stat-pill__value { color: var(--accent-rose); }
+.stat-pill--streak .stat-pill__value { color: var(--accent-amber); }
 .stat-pill__label { color: var(--text-muted); font-size: 0.7rem; }
 
 /* ── COPTIC CALENDAR ───────────────────────────────────── */
@@ -225,19 +230,34 @@ body {
   max-width: 1100px; margin: 0 auto;
   padding: 1rem 2rem 0;
 }
+.calendar-row {
+  display: flex; gap: 1rem;
+}
 .coptic-calendar__inner {
   display: flex; align-items: center; gap: 1rem;
   padding: 0.9rem 1.4rem;
-  background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(240,194,127,0.08));
-  border: 1px solid rgba(168,85,247,0.2);
+  background: linear-gradient(135deg, rgba(220,38,38,0.12), rgba(147,51,234,0.08));
+  border: 1px solid rgba(220,38,38,0.2);
   border-radius: var(--radius-md);
   transition: all var(--transition);
 }
 .coptic-calendar__inner:hover {
-  border-color: rgba(168,85,247,0.4);
-  box-shadow: 0 0 30px rgba(168,85,247,0.1);
+  border-color: rgba(220,38,38,0.4);
+  box-shadow: 0 0 30px rgba(220,38,38,0.1);
 }
-.coptic-calendar__icon { font-size: 1.6rem; }
+.coptic-calendar__icon { font-size: 1.6rem; display: flex; align-items: center; }
+.coptic-cross-img {
+  width: 3.5rem; height: 3.5rem;
+  object-fit: contain;
+  filter: invert(1) hue-rotate(180deg) contrast(1.2);
+  mix-blend-mode: screen;
+}
+.gregorian-cal-img {
+  width: 3.5rem; height: 3.5rem;
+  object-fit: contain;
+  filter: invert(1) contrast(8) hue-rotate(180deg);
+  mix-blend-mode: screen;
+}
 .coptic-calendar__info { display: flex; flex-direction: column; flex: 1; }
 .coptic-calendar__label {
   font-size: 0.68rem; color: var(--text-muted);
@@ -249,9 +269,20 @@ body {
 }
 .coptic-calendar__month-badge {
   padding: 0.35rem 0.9rem; border-radius: 50px;
-  background: var(--gradient-hero); color: var(--bg-primary);
+  background: linear-gradient(135deg, #dc2626, #9333ea); color: var(--bg-primary);
   font-size: 0.75rem; font-weight: 700;
   font-family: var(--font-display);
+}
+.gregorian-calendar__inner {
+  background: linear-gradient(135deg, rgba(100,181,246,0.12), rgba(77,182,172,0.08));
+  border-color: rgba(100,181,246,0.2);
+}
+.gregorian-calendar__inner:hover {
+  border-color: rgba(100,181,246,0.4);
+  box-shadow: 0 0 30px rgba(100,181,246,0.1);
+}
+.gregorian-month-badge {
+  background: linear-gradient(135deg, #64b5f6, #4db6ac);
 }
 
 /* ── PHILOSOPHER GALLERY ───────────────────────────────── */
@@ -337,7 +368,7 @@ body {
   transition: transform var(--transition), box-shadow var(--transition);
   flex-shrink: 0;
 }
-.add-task-form__submit:hover { transform: scale(1.1); box-shadow: var(--shadow-glow-rose); }
+.add-task-form__submit:hover { transform: scale(1.1); box-shadow: var(--shadow-glow-purple); }
 
 /* ── TASK LIST ─────────────────────────────────────────── */
 .task-list-header {
@@ -375,7 +406,7 @@ body {
   to { opacity: 1; transform: translateX(0); }
 }
 .task-item:hover {
-  border-color: rgba(240,194,127,0.2);
+  border-color: rgba(147,51,234,0.25);
   background: var(--bg-card-hover);
   transform: translateX(4px);
 }
@@ -385,9 +416,9 @@ body {
 .task-item__priority-bar {
   position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
 }
-.task-item__priority-bar--normal { background: var(--accent-cyan); }
-.task-item__priority-bar--important { background: var(--accent-gold); }
-.task-item__priority-bar--critical { background: var(--accent-rose); }
+.task-item__priority-bar--normal { background: var(--accent-cyan); }       /* Blue — Trust */
+.task-item__priority-bar--important { background: var(--accent-amber); }   /* Amber — Energy */
+.task-item__priority-bar--critical { background: var(--accent-rose); }     /* Red — Courage */
 
 .task-item__checkbox {
   width: 26px; height: 26px; border-radius: 50%;
@@ -409,7 +440,7 @@ body {
   transition: all var(--transition); font-size: 1.1rem; opacity: 0;
 }
 .task-item:hover .task-item__delete { opacity: 1; }
-.task-item__delete:hover { background: rgba(252,92,125,0.15); color: var(--accent-rose); }
+.task-item__delete:hover { background: rgba(220,38,38,0.15); color: var(--accent-rose); }
 
 /* ── EMPTY STATE ───────────────────────────────────────── */
 .empty-state { text-align: center; padding: 4rem 2rem; animation: fadeIn 0.6s ease; }
@@ -454,6 +485,7 @@ body {
   .philosopher-gallery { padding: 1rem 1rem 0.5rem; }
   .coptic-calendar { padding: 0.8rem 1rem 0; }
   .coptic-calendar__date { font-size: 0.85rem; }
+  .calendar-row { flex-direction: column; }
   .philosopher-card { width: 80px; }
   .philosopher-card__avatar, .philosopher-card__fallback { width: 60px; height: 60px; }
   .quote-overlay__content { padding: 2rem 1.5rem; }

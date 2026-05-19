@@ -28,7 +28,7 @@ const taskList      = $('#task-list');
 const emptyState    = $('#empty-state');
 const galleryTrack  = $('#gallery-track');
 const filterBtns    = $$('.filter-btn');
-const randomBtn     = $('#random-quote-btn');
+
 
 // ── HELPERS ──────────────────────────────────────────────
 function getPhil(id) { return PHILOSOPHERS.find(p => p.id === id) || PHILOSOPHERS[0]; }
@@ -64,7 +64,7 @@ function pickQuote(category) {
 // ── PARTICLES ────────────────────────────────────────────
 function spawnParticles() {
   particlesC.innerHTML = '';
-  const colors = ['#f0c27f','#fc5c7d','#a855f7','#06b6d4','#34d399','#fbbf24'];
+  const colors = ['#dc2626','#9333ea','#d4a843','#3b82f6','#22c55e','#f59e0b'];
   for (let i = 0; i < 30; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
@@ -76,7 +76,7 @@ function spawnParticles() {
 
 // ── CONFETTI ─────────────────────────────────────────────
 function burstConfetti() {
-  const colors = ['#f0c27f','#fc5c7d','#a855f7','#06b6d4','#34d399','#fbbf24','#f472b6','#818cf8'];
+  const colors = ['#dc2626','#9333ea','#d4a843','#3b82f6','#22c55e','#f59e0b','#7c3aed','#b91c1c'];
   for (let i = 0; i < 40; i++) {
     const c = document.createElement('div');
     c.className = 'confetti-piece';
@@ -223,7 +223,7 @@ function toggleTask(id) {
   t.done = !t.done;
   t.completedAt = t.done ? Date.now() : null;
   saveTasks(); renderTasks();
-  if (t.done) { burstConfetti(); showQuote('taskCompleted', 'Quest completed! 🏆'); }
+  if (t.done) { burstConfetti(); showQuote('taskCompleted', 'Quest completed!'); }
 }
 
 function deleteTask(id) {
@@ -261,13 +261,19 @@ overlay.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && overlay.classList.contains('active')) hideQuote();
 });
-randomBtn.addEventListener('click', () => {
-  showQuote(randFrom(['welcome', 'taskCreated', 'taskCompleted']), 'Words of wisdom ✨');
-});
 
 // ── INIT ─────────────────────────────────────────────────
+function renderGregorianCalendar() {
+  const now = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  $('#gregorian-date').textContent = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+  $('#gregorian-month-badge').textContent = months[now.getMonth()];
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   renderCopticCalendar();
+  renderGregorianCalendar();
   buildGallery();
   renderTasks();
   setTimeout(() => showQuote('welcome', 'Welcome, seeker of wisdom'), 400);
