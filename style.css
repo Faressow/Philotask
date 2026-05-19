@@ -253,9 +253,9 @@ body {
   mix-blend-mode: screen;
 }
 .gregorian-cal-img {
-  width: 3.5rem; height: 3.5rem;
+  width: 5rem; height: 5rem;
   object-fit: contain;
-  filter: invert(1) contrast(8) hue-rotate(180deg);
+  filter: invert(1) hue-rotate(180deg) contrast(1.5) brightness(1.2);
   mix-blend-mode: screen;
 }
 .coptic-calendar__info { display: flex; flex-direction: column; flex: 1; }
