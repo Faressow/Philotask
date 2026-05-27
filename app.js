@@ -7,6 +7,7 @@
 let tasks = JSON.parse(localStorage.getItem('philotask_tasks') || '[]');
 let currentFilter = 'all';
 let shownQuoteKeys = JSON.parse(localStorage.getItem('philotask_shown') || '[]');
+let streakData = JSON.parse(localStorage.getItem('philotask_streak') || '{"count":0,"lastDate":null}');
 
 // ── DOM REFS ─────────────────────────────────────────────
 const $ = (s) => document.querySelector(s);
@@ -34,6 +35,38 @@ const filterBtns    = $$('.filter-btn');
 function getPhil(id) { return PHILOSOPHERS.find(p => p.id === id) || PHILOSOPHERS[0]; }
 function randFrom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function saveTasks() { localStorage.setItem('philotask_tasks', JSON.stringify(tasks)); }
+function animateCounter(el, target, duration = 800) {
+  const start = performance.now();
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(target * ease);
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+function saveStreak() { localStorage.setItem('philotask_streak', JSON.stringify(streakData)); }
+function toDateStr(ts) { return new Date(ts).toISOString().slice(0, 10); }
+
+function recordDailyStreak() {
+  const today = toDateStr(Date.now());
+  const yesterday = toDateStr(Date.now() - 86400000);
+  if (streakData.lastDate === today) return;
+  if (streakData.lastDate === yesterday) streakData.count++;
+  else streakData.count = 1;
+  streakData.lastDate = today;
+  saveStreak();
+}
+
+function checkStreakReset() {
+  if (!streakData.lastDate) return;
+  const yesterday = toDateStr(Date.now() - 86400000);
+  if (streakData.lastDate < yesterday) {
+    streakData.count = 0;
+    streakData.lastDate = null;
+    saveStreak();
+  }
+}
 function escHTML(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 function fmtTime(ts) {
   const diff = Date.now() - ts;
@@ -173,12 +206,20 @@ function buildGallery() {
 function updateStats() {
   const total = tasks.length;
   const done = tasks.filter(t => t.done).length;
-  let streak = 0;
-  const sorted = [...tasks].sort((a, b) => (b.completedAt || 0) - (a.completedAt || 0));
-  for (const t of sorted) { if (t.done) streak++; else break; }
   $('#stat-total-value').textContent = total;
   $('#stat-done-value').textContent = done;
-  $('#stat-streak-value').textContent = streak;
+
+  const streakEl = $('#stat-streak-value');
+  const prevStreak = parseInt(streakEl.textContent) || 0;
+  streakEl.textContent = streakData.count;
+
+  if (streakData.count > prevStreak) {
+    const pill = streakEl.closest('.stat-pill');
+    pill.classList.remove('streak-bump');
+    void pill.offsetWidth;
+    pill.classList.add('streak-bump');
+    pill.addEventListener('animationend', () => pill.classList.remove('streak-bump'), { once: true });
+  }
 }
 
 // ── RENDER TASKS ─────────────────────────────────────────
@@ -222,13 +263,31 @@ function toggleTask(id) {
   if (!t) return;
   t.done = !t.done;
   t.completedAt = t.done ? Date.now() : null;
-  saveTasks(); renderTasks();
-  if (t.done) { burstConfetti(); showQuote('taskCompleted', 'Quest completed!'); }
+  saveTasks();
+  if (t.done) {
+    const el = document.querySelector(`[data-id="${id}"]`)?.closest('.task-item');
+    if (el) {
+      el.classList.add('task-item--just-done');
+      el.addEventListener('animationend', () => { el.classList.remove('task-item--just-done'); renderTasks(); }, { once: true });
+    } else { renderTasks(); }
+    recordDailyStreak(); burstConfetti(); showQuote('taskCompleted', 'Quest completed!');
+  } else {
+    renderTasks();
+  }
 }
 
 function deleteTask(id) {
-  tasks = tasks.filter(t => t.id !== id);
-  saveTasks(); renderTasks();
+  const el = document.querySelector(`[data-id="${id}"]`)?.closest('.task-item');
+  if (el) {
+    el.classList.add('task-item--removing');
+    el.addEventListener('animationend', () => {
+      tasks = tasks.filter(t => t.id !== id);
+      saveTasks(); renderTasks();
+    }, { once: true });
+  } else {
+    tasks = tasks.filter(t => t.id !== id);
+    saveTasks(); renderTasks();
+  }
 }
 
 // ── EVENTS ───────────────────────────────────────────────
@@ -272,9 +331,15 @@ function renderGregorianCalendar() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  checkStreakReset();
   renderCopticCalendar();
   renderGregorianCalendar();
   buildGallery();
   renderTasks();
+  const total = tasks.length;
+  const done = tasks.filter(t => t.done).length;
+  animateCounter($('#stat-total-value'),  total,              800);
+  animateCounter($('#stat-done-value'),   done,               600);
+  animateCounter($('#stat-streak-value'), streakData.count,  1000);
   setTimeout(() => showQuote('welcome', 'Welcome, seeker of wisdom'), 400);
 });

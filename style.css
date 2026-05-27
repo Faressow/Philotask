@@ -220,10 +220,23 @@ body {
   font-size: 0.8rem; transition: all var(--transition);
 }
 .stat-pill__icon { font-size: 0.9rem; }
-.stat-pill__value { font-weight: 700; color: #3b82f6; }
+.stat-pill__value { font-weight: 700; color: #3b82f6; display: inline-block; animation: digitRoll 0.4s ease both; }
 .stat-pill--done .stat-pill__value { color: var(--accent-emerald); }
 .stat-pill--streak .stat-pill__value { color: var(--accent-rose); }
 .stat-pill__label { color: var(--text-muted); font-size: 0.7rem; }
+@keyframes statPillEnter {
+  0%   { opacity: 0; transform: translateY(-12px) scale(0.8); }
+  70%  { transform: translateY(2px) scale(1.05); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes digitRoll {
+  0%   { opacity: 0; transform: translateY(12px); }
+  60%  { opacity: 1; transform: translateY(-2px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+#stat-total  { animation: statPillEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both; }
+#stat-done   { animation: statPillEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both; }
+#stat-streak { animation: statPillEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both; }
 
 /* ── COPTIC CALENDAR ───────────────────────────────────── */
 .coptic-calendar {
@@ -233,6 +246,20 @@ body {
 .calendar-row {
   display: flex; gap: 1rem;
 }
+@keyframes crossGlowPulse {
+  0%   { box-shadow: 0 0 10px rgba(220,38,38,0.10), inset 0 0 20px rgba(220,38,38,0.03); }
+  50%  { box-shadow: 0 0 28px rgba(220,38,38,0.28), inset 0 0 30px rgba(147,51,234,0.08); }
+  100% { box-shadow: 0 0 10px rgba(220,38,38,0.10), inset 0 0 20px rgba(220,38,38,0.03); }
+}
+@keyframes crossBreathe {
+  0%   { filter: drop-shadow(0 0 4px rgba(220,38,38,0.25));  transform: scale(1);    }
+  50%  { filter: drop-shadow(0 0 14px rgba(220,38,38,0.65)); transform: scale(1.06); }
+  100% { filter: drop-shadow(0 0 4px rgba(220,38,38,0.25));  transform: scale(1);    }
+}
+@keyframes badgeShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
 .coptic-calendar__inner {
   display: flex; align-items: center; gap: 1rem;
   padding: 0.9rem 1.4rem;
@@ -240,6 +267,7 @@ body {
   border: 1px solid rgba(220,38,38,0.2);
   border-radius: var(--radius-md);
   transition: all var(--transition);
+  animation: crossGlowPulse 4s ease-in-out infinite;
 }
 .coptic-calendar__inner:hover {
   border-color: rgba(220,38,38,0.4);
@@ -249,8 +277,8 @@ body {
 .coptic-cross-img {
   width: 3.5rem; height: 3.5rem;
   object-fit: contain;
-  filter: invert(1) hue-rotate(180deg) contrast(1.2);
   mix-blend-mode: screen;
+  animation: crossBreathe 4s ease-in-out infinite;
 }
 .gregorian-cal-img {
   width: 5rem; height: 5rem;
@@ -269,9 +297,12 @@ body {
 }
 .coptic-calendar__month-badge {
   padding: 0.35rem 0.9rem; border-radius: 50px;
-  background: linear-gradient(135deg, #dc2626, #9333ea); color: var(--bg-primary);
+  color: var(--bg-primary);
   font-size: 0.75rem; font-weight: 700;
   font-family: var(--font-display);
+  background-size: 200% auto;
+  background-image: linear-gradient(90deg, #dc2626 0%, #9333ea 40%, #d4a843 60%, #9333ea 80%, #dc2626 100%);
+  animation: badgeShimmer 3.5s linear infinite;
 }
 .gregorian-calendar__inner {
   background: linear-gradient(135deg, rgba(100,181,246,0.12), rgba(77,182,172,0.08));
@@ -398,12 +429,41 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   transition: all var(--transition);
-  animation: taskSlideIn 0.4s ease both;
+  animation: taskFlyIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   position: relative; overflow: hidden;
 }
-@keyframes taskSlideIn {
-  from { opacity: 0; transform: translateX(-20px); }
-  to { opacity: 1; transform: translateX(0); }
+@keyframes taskFlyIn {
+  0%   { opacity: 0; transform: translateX(-60px) scale(0.92) rotateY(-8deg); }
+  60%  { opacity: 1; transform: translateX(6px)   scale(1.01) rotateY(1deg); }
+  80%  { transform: translateX(-3px) scale(0.99); }
+  100% { opacity: 1; transform: translateX(0)    scale(1)    rotateY(0deg); }
+}
+@keyframes taskFlyOut {
+  0%   { opacity: 1; transform: translateX(0)     scale(1);    max-height: 80px; margin-bottom: 0.7rem; }
+  40%  { opacity: 0; transform: translateX(80px)  scale(0.88); }
+  100% { opacity: 0; transform: translateX(120px) scale(0.8);  max-height: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; }
+}
+@keyframes taskDone {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-6px); }
+  40%  { transform: translateX(5px); }
+  60%  { transform: translateX(-3px); }
+  80%  { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+.task-item:nth-child(1)  { animation-delay: 0.00s; }
+.task-item:nth-child(2)  { animation-delay: 0.05s; }
+.task-item:nth-child(3)  { animation-delay: 0.10s; }
+.task-item:nth-child(4)  { animation-delay: 0.15s; }
+.task-item:nth-child(5)  { animation-delay: 0.20s; }
+.task-item:nth-child(n+6){ animation-delay: 0.25s; }
+.task-item--removing {
+  animation: taskFlyOut 0.38s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+  pointer-events: none;
+  overflow: hidden;
+}
+.task-item--just-done {
+  animation: taskDone 0.4s ease both;
 }
 .task-item:hover {
   border-color: rgba(147,51,234,0.25);
