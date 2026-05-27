@@ -220,9 +220,9 @@ body {
   font-size: 0.8rem; transition: all var(--transition);
 }
 .stat-pill__icon { font-size: 0.9rem; }
-.stat-pill__value { font-weight: 700; color: var(--accent-gold); }
+.stat-pill__value { font-weight: 700; color: #3b82f6; }
 .stat-pill--done .stat-pill__value { color: var(--accent-emerald); }
-.stat-pill--streak .stat-pill__value { color: var(--accent-amber); }
+.stat-pill--streak .stat-pill__value { color: var(--accent-rose); }
 .stat-pill__label { color: var(--text-muted); font-size: 0.7rem; }
 
 /* ── COPTIC CALENDAR ───────────────────────────────────── */
